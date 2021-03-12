@@ -13,7 +13,10 @@ class Kwitansi extends CI_Controller
 
 
 	function index(){
-		$this->load->view('home');
+
+		$this->load->view('template/header');
+		$this->load->view('kwitansi');
+		$this->load->view('template/footer');
 	}
 
 	function cetak(){
@@ -79,7 +82,7 @@ class Kwitansi extends CI_Controller
 			$data = [
 				'pesanan' => $pesanan,
 				'nilai_pesanan' => $nilai_pesanan,
-				'terbilang' =>$ter,
+				'terbilang' =>ucwords($ter),
 				'untuk_pembayaran' => $untuk_pembayaran,
 				'no_kwitansi' => $no_kwitansi,
 				'tgl_terbit' => $tgl
@@ -95,6 +98,26 @@ class Kwitansi extends CI_Controller
 
 	
 	}
+
+
+	function cetak_kwitansi(){
+
+		$this->load->library('dompdf_gen');
+
+		$data['judul'] = "Kwitansi Ebunga";
+		$data['footer'] = "belanja mudah dan murah hanya di ebunga";
+ 		$this->load->view('cetak_kwitansi/cetak',$data);
+
+ 		$paper_size ="A4";
+ 		$orientation = "landscape";
+ 		// $customPaper = array(0,0,360,360);
+ 		$html = $this->output->get_output();
+ 		$this->dompdf->set_paper($paper_size, $orientation);
+
+ 		$this->dompdf->load_html($html);
+ 		$this->dompdf->render();
+ 		$this->dompdf->stream("cetak_oprator", array('Attachment' => 0));
+	}	
 
 
 	
