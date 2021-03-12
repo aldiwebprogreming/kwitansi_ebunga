@@ -116,7 +116,7 @@ class Kwitansi extends CI_Controller
 
  		$this->dompdf->load_html($html);
  		$this->dompdf->render();
- 		$this->dompdf->stream("cetak_oprator", array('Attachment' => 0));
+ 		$this->dompdf->stream("cetak_oprator.pdf", array('Attachment' => 0));
 	}	
 
 
