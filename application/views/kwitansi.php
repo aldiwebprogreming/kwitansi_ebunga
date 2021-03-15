@@ -14,89 +14,193 @@
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
-                  <h3 >Cetak kwitansi</h3>
+                  <h3 >Cetak Kwitansi</h3>
                  <!--  <a href="javascript:void(0);">View Report</a> -->
                 </div>
               </div>
               <div class="card-body">
-                <div class="row">
-                   <div class="col-lg-6">
-                    <form method="post" action="<?= base_url() ?>kwitansi/cetak">
-                        <label>Pesanan</label>
-                        <input type="text" id="cek" name="pesanan" class="form-control" /><br />
 
-                        <label>Harga Pesanan</label>
-                        <input type="number" id="cek" name="nilai_pesanan" class="form-control" /><br />
-                        
-                        <label>Untuk Pembayaran</label>
-                        <input type="text" id="cek" name="untuk_pembayaran" class="form-control"/><br />   
+               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-bottom: 20px;">
+                  Tambah Kwitansi
+              </button>
+              
 
+            <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Tambah Kwitansi</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                 <form method="post" action="<?= base_url() ?>Kwitansi/cetak">
 
-                        <input type="submit" id="kirim" name="kirim" class="btn btn-primary" value="Submit" disabled="disabled"/>
-                    </form>
-                     <!-- <form method="post" action="<?= base_url() ?>kwitansi/cetak">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1">Pesanan</label>
+                  <br>
+                   <div class="form-groub">
+                    <label>Telah Terima Dari</label>
+                    <input type="text" name="pesanan" class="form-control" placeholder="Masukan keterangan pesanan">
+                   </div>
 
-                          <input type="text" id="cek" class="form-control" placeholder="Masukan penerimam pesanan" required="" name="pesanan">
-                        </div>
-
-                        <div class="form-group">
-                          <label for="exampleInputPassword1">Harga Pesanan</label>
-
-                          <input type="number" id="cek" class="form-control"  placeholder="Masukan nilai pembelian" required="" name="nilai_pesanan">
-                          <small>Masukan harga tanpa (Rp) dan (.,)</small>
-                        </div>
-
-                        <div class="form-group">
-                          <label for="exampleInputPassword1">Untuk Pembayaran</label>
-                          <textarea id="cek" class="form-control"  name="untuk_pembayaran" placeholder="Masukan keterangan untuk pembayaran"></textarea>
-                        </div>
-                        <div class="form-group">
-                       
-                          <input type="submit" id="add_data" name="kirim" class="btn btn-primary" value="Cetak" disabled="disabled">
-                       
-                      </div>
-                    </form> -->
+                   <br>
+                   <div class="form-groub">
+                    <label>Harga Pesanan</label>
+                    <input type="number" name="nilai_pesanan" class="form-control" placeholder="Masukan harga pesanan">
+                   </div>
+                   <small>Masukan harga tanpa (Rp) dan (.,).</small>
+                   <br>
+                    <br>
 
 
-                
+                   <div class="form-groub">
+                    <label>Untuk Pembayaran</label>
+                    <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran."></textarea>
+                   </div>
+
+                    <!-- <br>
+                   <div class="form-groub">
+                    <label>Momor Terbit</label>
+                   <input type="text" name="no_terbit" class="form-control">
+                   </div> -->
+
+
+               
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" name="kirim" class="btn btn-primary" value="Save">
                 </div>
 
-                <div class="col-lg-6" id="dataK" style="display: none;">
-                    <h3>Data Kwitansi</h3>
-                     <table id="" class="table table-bordered table-striped">
+                  </form>
+              </div>
+            </div>
+          </div>
+
+        <!-- Modal -->
+            
+              <!--   <a href="<?= base_url() ?>operator/add_operator" class="btn btn-primary mb-4"><i class="fas fa-plus"></i> Tambah Operator</a> -->
+            
+              <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>No</th>
                   <th>Pesanan</th>
-                  <th>Harga</th>
+                  <th>Nilai Pesanan</th>
                   <th>Untuk Pembayaran</th>
+                  <th>Tanggal Terbit</th>
                   <th>Opsi</th>
                 
                 </tr>
                 </thead>
                 <tbody>
-                
+
+                  <?php $no = 1; ?>
+                 <?php foreach ($kwitansi as $data) { ?>
                 <tr> 
-                    <td>dfd</td>
-                    <td>dfdfdf</td>
-                    <td>dfdfd</td>
-                    <td><a href="<?= base_url() ?>operator/hapus?id" onclick="return confirm('Yakin Hapus?')" class="btn btn-danger">Cetak Kwitansi</a></td>
+                    <td><?= $no++; ?></td>
+                    <td><?= $data['pesanan'] ?></td>
+                    <td><?= $data['nilai_pesanan'] ?></td>
+                    <td><?= $data['untuk_pembayaran'] ?></td>
+                    <td><?= $data['tgl_terbit'] ?></td>
+                    
+                    <td>
+                      
+                   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<?= $data['id'] ?>" style="">
+                    Hapus
+                     </button>
+
+                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modaldet<?= $data['id'] ?>" style="">
+                    Detail
+                     </button>
+
+
+                      <a href="<?= base_url() ?>kwitansi/edit?id=<?= $data['id'] ?>" class="btn btn-warning">Edit</a>
+
+                      <a href="" onclick="return confirm('Yakin Hapus?')" class="btn btn-primary">Cetak</a>
+                    </td>
+                    
+                   
                 </tr>
 
-                      
+          <!--   Modal Delet -->
+            <div class="modal fade" id="modal<?= $data['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><b>Delete Kwitansi</b></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5>Yakin ingin menghapus data ini ?</h5>
+
+                 <form method="post" action="<?= base_url() ?>Kwitansi/hapus_kwitansi">   
+                 <input type="hidden" name="hapus" value="<?= $data['id'] ?>">            
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" name="kirim" class="btn btn-primary" value="Yes">
+                </div>
+
+                  </form>
+              </div>
+            </div>
+          </div>
+
+        <!-- Modal -->
+
+
+
+
+        <!--   Modal Detail -->
+            <div class="modal fade" id="modaldet<?= $data['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><b>Detail kwitansi</b></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                
+                  <p>No : </p> <?php $data['no_kwitansi'] ?>
+
+                  
+                             
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" name="kirim" class="btn btn-primary" value="Yes">
+                </div>
+
+                  </form>
+              </div>
+            </div>
+          </div>
+
+        <!-- Modal -->
             
+
+              <?php } ?>
+
+                    
                 </tbody>
                 <tfoot>
+                <tr>
+                  <th>No</th>
+                  <th>Pesanan</th>
+                  <th>Nilai Pesanan</th>
+                  <th>Untuk Pembayaran</th>
+                  <th>Tanggal Terbit</th>
+                  <th>Opsi</th>
+                </tr>
+                </tfoot>
               </table>
-
-
-                  </div>
-
-
-
-              </div>
-              </div>
+            </div>
             </div>
           </div>         
         </div>
@@ -104,7 +208,8 @@
       </div>
       <!-- /.container-fluid -->
     </div>
-    <!-- /.content -->
+    <!-- /.conte
+      <td><</td>nt -->
   </div>
   <!-- /.content-wrapper -->
 
@@ -114,33 +219,14 @@
   </aside>
   <!-- /.control-sidebar -->
 
-<script>
-  $(document).ready(function(){
+  <!-- Main Footer -->
+<script src="<?php echo base_url() ?>assets/alert.js"></script>
+  <!-- <script>
 
-    $("#kirim").click(function(){
+   // function tambah(){
+   //  $("#tambah").click(function(){
 
-      $("#dataK").show();
-
-    })
-  })
-</script>
-
-
-<script>
- $(document).ready(function() {
-    $('form > input#cek').keyup(function() {
-        var empty = false;
-        $('form > input').each(function() {
-            if ($(this).val() == '') {
-                empty = true;
-            }
-        });
-
-        if (empty) {
-            $('#kirim').attr('disabled', 'disabled');
-        } else {
-            $('#kirim').removeAttr('disabled');
-        }
-    });
-})()
-</script>
+   //    swal("Maaf!", " promo tidak dapat ditambah", "error");
+   //  })
+   // }
+  </script> -->

@@ -25,61 +25,61 @@ class Login extends CI_Controller
 
 	function auth(){
 
-		$this->form_validation->set_rules('username','Username','trim|required');
+		  $user = $this->input->post('username');
+		 $pass = $this->input->post('pass');
 
-		$username = $this->input->post('username');
-		$pass = $this->input->post('pass');
 
-		 
+		$query = $this->db->get_where('tbl_oprator', array('usernam' => $user ))->result_array();
+		foreach ($query as $row) {
+		}
 
-		if($query == true){
+			if ($query == true) {
+				if (password_verify($pass, $row['pass'])) {
+						
+						$data = [
 
-			if (password_verify($pass, $query['pass'])) {
-				
-				$data =[
+							'username' => $user
+						];
 
-					'username' => $username
-				];
-
-				$this->session->set_data($data);
-				$this->session->set_flashdata('message', "Swal.fire({
+					$this->session->set_userdata($data);
+					$this->session->set_flashdata('message', "Swal.fire({
 					  title: 'Yess!',
 					  text: 'Anda berhasil login',
-					  imageUrl: 'http://localhost:8080/lending_admin/assets3/img/suksess.svg',
+					  imageUrl: 'http://localhost:8080/kwitansi_ebunga/assets/logo/sukksess.svg',
 					  imageWidth: 200,
 					  imageHeight: 100,
 					  imageAlt: 'Custom image',
 					})");
 
 				redirect('kwitansi/');
+					
+				} else {
+
+					$this->session->set_flashdata('message', "Swal.fire({
+					  title: 'Gagal!',
+					  text: 'Password yang anda salah',
+					  imageUrl: 'http://localhost:8080/kwitansi_ebunga/assets/logo/pass2.svg',
+					  imageWidth: 200,
+					  imageHeight: 100,
+					  imageAlt: 'Custom image',
+					})");
+
+					redirect('login/');
+				}
 			} else {
 
 				$this->session->set_flashdata('message', "Swal.fire({
-					  title: 'Gagal',
-					  text: 'Password anda salah',
-					  imageUrl: 'http://localhost:8080/lending_admin/assets3/img/suksess.svg',
+					  title: 'Gagal!',
+					  text: 'Akun anda belum terdaftar',
+					  imageUrl: 'http://localhost:8080/kwitansi_ebunga/assets/logo/akun.svg',
 					  imageWidth: 200,
 					  imageHeight: 100,
 					  imageAlt: 'Custom image',
 					})");
 
-				redirect('Login/');
+					redirect('login/');
 
 			}
-
-		} else{
-
-				$this->session->set_flashdata('message', "Swal.fire({
-					  title: 'Gagal',
-					  text: 'Akun anda salah',
-					  imageUrl: 'http://localhost:8080/lending_admin/assets3/img/suksess.svg',
-					  imageWidth: 200,
-					  imageHeight: 100,
-					  imageAlt: 'Custom image',
-					})");
-
-				redirect('Login/');	
-		}
 	}
 }
 

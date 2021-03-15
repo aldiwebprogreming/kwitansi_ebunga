@@ -14,8 +14,10 @@ class Kwitansi extends CI_Controller
 
 	function index(){
 
+		$tgl = date('d-m-Y');
+		$data['kwitansi'] =  $this->db->query("SELECT * FROM tbl_kwitansi WHERE tgl_terbit = '$tgl' ORDER BY id DESC ")->result_array();
 		$this->load->view('template/header');
-		$this->load->view('kwitansi');
+		$this->load->view('kwitansi', $data);
 		$this->load->view('template/footer');
 	}
 
@@ -117,7 +119,65 @@ class Kwitansi extends CI_Controller
  		$this->dompdf->load_html($html);
  		$this->dompdf->render();
  		$this->dompdf->stream("cetak_oprator.pdf", array('Attachment' => 0));
-	}	
+	}
+
+
+	function edit(){
+
+			$this->form_validation->set_rules('pesanan', "Telah terima dari","trim|required");
+			$this->form_validation->set_rules('nilai_pesanan', "Harga pesanan", "trim|required");
+			$this->form_validation->set_rules('no_kwitansi', "Nomor Kwitansi", "trim|required");
+			// $this->form_validation->set_rules('tgl_terbit', "Tanggal Terbit", "trim|required");
+			$this->form_validation->set_rules('untuk_pembayaran', "Untuk Pembayaran", "trim|required");
+
+
+			if ($this->form_validation->run()== FALSE) {
+				$id = $this->input->get('id');
+		$data['edit'] = $this->db->get_where('tbl_kwitansi', array('id' => $id))->result_array();
+
+		$this->load->view('template/header');
+		$this->load->view('edit_kwitansi', $data);
+		$this->load->view('template/footer');
+			} else {
+
+
+		if ($this->input->post('edit')) {
+			
+				$id = $this->input->get('id');
+
+					$data = [
+
+						'pesanan' => $this->input->post('pesanan'),
+						'nilai_pesanan' => $this->input->post('nilai_pesanan'),
+						'untuk_pembayaran' => $this->input->post('untuk_pembayaran'),
+						'no_kwitansi'=> $this->input->post('no_kwitansi')
+						// 'tgl_terbit' => $this->input->post('tgl_terbit')
+
+					];
+
+					$this->db->where('id', $id);
+					$this->db->update('tbl_kwitansi', $data);
+						$this->session->set_flashdata('message', 'swal("Sukses!", "Data Berhasil diubah", "success");');
+						redirect('kwitansi/');
+
+
+				}
+
+				
+			}
+
+	
+
+	}
+
+	function hapus_kwitansi(){
+
+		$id = $this->input->post('hapus');
+		$this->db->where('id', $id);
+		$this->db->delete('tbl_kwitansi');
+		$this->session->set_flashdata('message', 'swal("Sukses!", "Data Berhasil di hapus", "success");');
+		redirect('kwitansi/');
+	}
 
 
 	
