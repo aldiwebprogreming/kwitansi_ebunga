@@ -34,11 +34,12 @@ class Login extends CI_Controller
 		}
 
 			if ($query == true) {
-				if (password_verify($pass, $row['pass'])) {
+				if (password_verify($pass, $row['pass']) AND $row['rule'] == "Super Admin") {
 						
 						$data = [
 
-							'username' => $user
+							'username' => $user,
+							'rule' => 'Super Admin'
 						];
 
 					$this->session->set_userdata($data);
@@ -53,11 +54,30 @@ class Login extends CI_Controller
 
 				redirect('kwitansi/');
 					
+				} elseif(password_verify($pass, $row['pass']) AND $row['rule'] == "Admin") {
+
+					$data = [
+
+							'username' => $user,
+							'rule' => 'Admin'
+						];
+
+						$this->session->set_userdata($data);
+					$this->session->set_flashdata('message', "Swal.fire({
+					  title: 'Yess!',
+					  text: 'Anda berhasil login',
+					  imageUrl: 'http://localhost:8080/kwitansi_ebunga/assets/logo/sukksess.svg',
+					  imageWidth: 200,
+					  imageHeight: 100,
+					  imageAlt: 'Custom image',
+					})");
+
+					redirect('kwitansi/');
 				} else {
 
 					$this->session->set_flashdata('message', "Swal.fire({
 					  title: 'Gagal!',
-					  text: 'Password yang anda salah',
+					  text: 'Password anda salah',
 					  imageUrl: 'http://localhost:8080/kwitansi_ebunga/assets/logo/pass2.svg',
 					  imageWidth: 200,
 					  imageHeight: 100,
@@ -65,6 +85,7 @@ class Login extends CI_Controller
 					})");
 
 					redirect('login/');
+
 				}
 			} else {
 
@@ -80,6 +101,20 @@ class Login extends CI_Controller
 					redirect('login/');
 
 			}
+	}
+
+	function logout(){
+
+		$this->session->unset_userdata('username');
+			 $this->session->set_flashdata('message', "Swal.fire({
+					  title: 'Yess!',
+					  text: 'Anda berhasil Keluar',
+					  imageUrl: 'http://localhost:8080/kwitansi_ebunga/assets/logo/log2.svg',
+					  imageWidth: 200,
+					  imageHeight: 100,
+					  imageAlt: 'Custom image',
+					})");
+			redirect('login/');
 	}
 }
 

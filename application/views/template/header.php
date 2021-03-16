@@ -163,7 +163,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?= base_url() ?>assets/logo/user.png" class="img-circle" alt="User Image" style="height: 32px;">
+          <img src="<?= base_url() ?>assets/logo/user2.png" class="img-circle" alt="User Image" style="height: 32px;">
         </div>
         <div class="info">
           <a href="#" class="d-block"><?= $this->session->userdata('username'); ?></a>
@@ -217,7 +217,7 @@
             </ul>
           </li> -->
           <li class="nav-item">
-            <a href="<?= base_url() ?>/Dashbord/" class="nav-link">
+            <a href="<?= base_url() ?>Dashboard/" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 
@@ -242,7 +242,52 @@
             </a>
           </li>
 
-           <li class="nav-item">
+
+        <?php if ($this->session->userdata('rule') == 'Admin') {?>
+
+
+          <style type="text/css">
+            #opra{
+              display: none;
+            }
+          </style>
+
+          <li class="nav-item">
+            <a href="<?= base_url() ?>kwitansi/data_kwitansi" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Data Kwitansi Anda
+                <span class="badge badge-info right"></span>
+              </p>
+            </a>
+          </li>
+
+        <?php } else { ?>
+
+
+          <li class="nav-item">
+            <a href="<?= base_url() ?>kwitansi/data_kwitansi" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Data Kwitansi Anda
+                <span class="badge badge-info right"></span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?= base_url() ?>kwitansi/all_kwitansi" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                All kwitansi
+                <span class="badge badge-info right"></span>
+              </p>
+            </a>
+          </li>
+
+        <?php } ?>
+
+           <li id="opra" class="nav-item">
             <a href="<?= base_url() ?>operator/data_operator" class="nav-link">
               <i class="nav-icon fas fa-user-alt"></i>
               <p>

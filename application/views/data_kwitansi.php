@@ -14,15 +14,15 @@
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
-                  <h3 >Cetak Kwitansi</h3>
+                  <h3 >Data Kwitansi Anda</h3>
                  <!--  <a href="javascript:void(0);">View Report</a> -->
                 </div>
               </div>
               <div class="card-body">
 
-               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-bottom: 20px;">
+              <!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-bottom: 20px;">
                   Tambah Kwitansi
-              </button>
+              </button> -->
               
 
             <!-- Modal -->
@@ -38,24 +38,16 @@
                 <div class="modal-body">
                  <form method="post" action="<?= base_url() ?>Kwitansi/cetak">
 
-                  <?php 
-                    
-                    foreach ($query as $data) {
-                    }
-                   ?>
-
-                   <input type="hidden" name="id_user" value="<?= $data['id'] ?>">
-
                   <br>
                    <div class="form-groub">
                     <label>Telah Terima Dari</label>
-                    <input type="text" name="pesanan" class="form-control" placeholder="Masukan keterangan pesanan" required="">
+                    <input type="text" name="pesanan" class="form-control" placeholder="Masukan keterangan pesanan">
                    </div>
 
                    <br>
                    <div class="form-groub">
                     <label>Harga Pesanan</label>
-                    <input type="number" name="nilai_pesanan" class="form-control" placeholder="Masukan harga pesanan" required="">
+                    <input type="number" name="nilai_pesanan" class="form-control" placeholder="Masukan harga pesanan">
                    </div>
                    <small>Masukan harga tanpa (Rp) dan (.,).</small>
                    <br>
@@ -64,7 +56,7 @@
 
                    <div class="form-groub">
                     <label>Untuk Pembayaran</label>
-                    <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran." required=""></textarea>
+                    <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran."></textarea>
                    </div>
 
                     <!-- <br>
@@ -114,8 +106,8 @@
                     <td><?= $data['tgl_terbit'] ?></td>
                     
                     <td>
-                  <!--     
-                   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<?= $data['id'] ?>" style="">
+                      
+                  <!--  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<?= $data['id'] ?>" style="">
                     Hapus
                      </button> -->
 

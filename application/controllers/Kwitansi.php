@@ -9,13 +9,23 @@ class Kwitansi extends CI_Controller
 	function __construct()
 	{
 		parent:: __construct();
+		if ($this->session->userdata('username') == NULL) {
+			redirect('login/');
+			}
 	}
 
 
 	function index(){
 
+		$id = $this->session->userdata('username');
+
+         $data['query'] = $this->db->get_where('tbl_oprator',array('usernam' => $id))->result_array();
+         $user = $this->db->get_where('tbl_oprator', array('usernam' => $id ))->result_array();
+         foreach ($user as $id_user) {}
+         $id_user1 = $id_user['id'];
+
 		$tgl = date('d-m-Y');
-		$data['kwitansi'] =  $this->db->query("SELECT * FROM tbl_kwitansi WHERE tgl_terbit = '$tgl' ORDER BY id DESC ")->result_array();
+		$data['kwitansi'] =  $this->db->query("SELECT * FROM tbl_kwitansi WHERE tgl_terbit = '$tgl' AND id_user = '$id_user1' ORDER BY id DESC ")->result_array();
 		$this->load->view('template/header');
 		$this->load->view('kwitansi', $data);
 		$this->load->view('template/footer');
@@ -76,6 +86,7 @@ class Kwitansi extends CI_Controller
 		$pesanan = $this->input->post('pesanan');
 		$nilai_pesanan = $this->input->post('nilai_pesanan');
 		$untuk_pembayaran = $this->input->post('untuk_pembayaran');
+		$id_user = $this->input->post('id_user');
 
 		if ($this->input->post('kirim')) {
 
@@ -87,7 +98,9 @@ class Kwitansi extends CI_Controller
 				'terbilang' =>ucwords($ter),
 				'untuk_pembayaran' => $untuk_pembayaran,
 				'no_kwitansi' => $no_kwitansi,
-				'tgl_terbit' => $tgl
+				'tgl_terbit' => $tgl,
+				'id_user' => $id_user
+
 
 			];
 
@@ -102,12 +115,14 @@ class Kwitansi extends CI_Controller
 	}
 
 
-	function cetak_kwitansi(){
+	function cetak_kwitansi(){ 
 
 		$this->load->library('dompdf_gen');
 
 		$data['judul'] = "Kwitansi Ebunga";
-		$data['footer'] = "belanja mudah dan murah hanya di ebunga";
+		$data['footer'] = "Kwitansi Ebunga Nomor :";
+		$id = $this->input->get('id');
+		$data['cetak'] = $this->db->get_where('tbl_kwitansi',  array('id' => $id))->result_array();
  		$this->load->view('cetak_kwitansi/cetak',$data);
 
  		$paper_size ="A4";
@@ -118,7 +133,7 @@ class Kwitansi extends CI_Controller
 
  		$this->dompdf->load_html($html);
  		$this->dompdf->render();
- 		$this->dompdf->stream("cetak_oprator.pdf", array('Attachment' => 0));
+ 		$this->dompdf->stream("kwitansi_no_$id.pdf", array('Attachment' => 0));
 	}
 
 
@@ -178,6 +193,37 @@ class Kwitansi extends CI_Controller
 		$this->session->set_flashdata('message', 'swal("Sukses!", "Data Berhasil di hapus", "success");');
 		redirect('kwitansi/');
 	}
+
+
+	function data_kwitansi(){
+		$user = $this->session->userdata('username');
+		$idUser = $this->db->get_where('tbl_oprator',array('usernam' => $user))->result_array();
+		foreach ($idUser as $detUser) {}
+		$get = $detUser['id'];
+;
+
+		if ($this->session->userdata('rule') == "Super Admin" OR $this->session->userdata('rule') == "Admin" ) {
+
+
+			$data['kwitansi'] = $this->db->get_where('tbl_kwitansi', array('id_user' => $get))->result_array();
+				$this->load->view('template/header');
+				$this->load->view('data_kwitansi', $data);
+				$this->load->view('template/footer');
+		} else {
+
+
+		redirect('login/');
+	}
+}
+
+function all_kwitansi(){
+
+				$data['kwitansi'] = $this->db->get('tbl_kwitansi')->result_array();
+				$this->load->view('template/header');
+				$this->load->view('all_kwitansi', $data);
+				$this->load->view('template/footer');
+		
+}
 
 
 	
