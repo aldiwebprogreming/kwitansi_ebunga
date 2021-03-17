@@ -45,7 +45,7 @@
                     if ($date == 01) {
                         $no = 1;
                       ?>
-                        <input type="text" name="nomor" value="<?= $no; ?>">
+                        <input type="hidden" name="nomor" value="<?= $no; ?>">
                     <?php } else {?>
 
 
@@ -56,14 +56,14 @@
                         $no = 1;
                       ?>    
 
-                   <input type="text" name="nomor" value="<?= $no; ?>">
+                   <input type="hidden" name="nomor" value="<?= $no; ?>">
                  <?php } else {
 
                       foreach ($nomor as $kode) {}
                       $no =  $kode['nomor'] +1;
                     ?>
 
-                    <input type="text" name="nomor" value="<?= $no++; ?>">
+                    <input type="hidden" name="nomor" value="<?= $no++; ?>">
 
                   <?php } } ?>
 
