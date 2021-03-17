@@ -26,6 +26,12 @@ class Kwitansi extends CI_Controller
 
 		$tgl = date('d-m-Y');
 		$data['kwitansi'] =  $this->db->query("SELECT * FROM tbl_kwitansi WHERE tgl_terbit = '$tgl' AND id_user = '$id_user1' ORDER BY id DESC ")->result_array();
+		//cek apakah data ada
+		$data['cek_nomor'] = $this->db->get('tbl_kwitansi')->num_rows();
+		//cek apakah data ada
+
+		$data['nomor'] = $this->db->query("SELECT * FROM tbl_kwitansi ORDER BY id DESC LIMIT 1")->result_array();
+
 		$this->load->view('template/header');
 		$this->load->view('kwitansi', $data);
 		$this->load->view('template/footer');
@@ -79,14 +85,16 @@ class Kwitansi extends CI_Controller
 
 		$array_bln = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
 		$bln = $array_bln[date('n')];
+		$no = $this->input->post('nomor');
 	
 
-		$no_kwitansi =  date('d/ ').$bln.date(' /Y');
+		$no_kwitansi =  $no.date('/d/').$bln.date('/Y');
 		$tgl = date('d-m-Y');
 		$pesanan = $this->input->post('pesanan');
 		$nilai_pesanan = $this->input->post('nilai_pesanan');
 		$untuk_pembayaran = $this->input->post('untuk_pembayaran');
 		$id_user = $this->input->post('id_user');
+		$nomor = $this->input->post('nomor');
 
 		if ($this->input->post('kirim')) {
 
@@ -99,10 +107,13 @@ class Kwitansi extends CI_Controller
 				'untuk_pembayaran' => $untuk_pembayaran,
 				'no_kwitansi' => $no_kwitansi,
 				'tgl_terbit' => $tgl,
-				'id_user' => $id_user
+				'id_user' => $id_user,
+				'nomor' => $nomor
 
 
 			];
+
+			
 
 
 			$input = $this->db->insert('tbl_kwitansi', $data);
@@ -133,11 +144,56 @@ class Kwitansi extends CI_Controller
 
  		$this->dompdf->load_html($html);
  		$this->dompdf->render();
+
+ 		//kode dibawah ini unutk menajalankan di server linux agar tidak error saat menreload ke pdf
+ 		ob_end_clean();
+ 		//end
  		$this->dompdf->stream("kwitansi_no_$id.pdf", array('Attachment' => 0));
 	}
 
 
 	function edit(){
+
+		function penyebut($nilai) {
+			 $nilai = abs($nilai);
+			 $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+			 $temp = "";
+			 if ($nilai < 12) {
+			 $temp = " ". $huruf[$nilai];
+			 } else if ($nilai <20) {
+			 $temp = penyebut($nilai - 10). " belas";
+			 } else if ($nilai < 100) {
+			 $temp = penyebut($nilai/10)." puluh". penyebut($nilai % 10);
+			 } else if ($nilai < 200) {
+			 $temp = " seratus" . penyebut($nilai - 100);
+			 } else if ($nilai < 1000) {
+			 $temp = penyebut($nilai/100) . " ratus" . penyebut($nilai % 100);
+			 } else if ($nilai < 2000) {
+			 $temp = " seribu" . penyebut($nilai - 1000);
+			 } else if ($nilai < 1000000) {
+			 $temp = penyebut($nilai/1000) . " ribu" . penyebut($nilai % 1000);
+			 } else if ($nilai < 1000000000) {
+			 $temp = penyebut($nilai/1000000) . " juta" . penyebut($nilai % 1000000);
+			 } else if ($nilai < 1000000000000) {
+			 $temp = penyebut($nilai/1000000000) . " milyar" . penyebut(fmod($nilai,1000000000));
+			 } else if ($nilai < 1000000000000000) {
+			 $temp = penyebut($nilai/1000000000000) . " trilyun" . penyebut(fmod($nilai,1000000000000));
+			 }     
+			 return $temp;
+			 }
+			 
+			 function terbilang($nilai) {
+			 if($nilai<0) {
+			 $hasil = "minus ". trim(penyebut($nilai));
+			 } else {
+			 $hasil = trim(penyebut($nilai));
+			 }     
+			 return $hasil;
+			 }
+			 
+			 
+			 $angka = $this->input->post('nilai_pesanan');
+			 $ter = terbilang($angka);
 
 			$this->form_validation->set_rules('pesanan', "Telah terima dari","trim|required");
 			$this->form_validation->set_rules('nilai_pesanan', "Harga pesanan", "trim|required");
@@ -164,6 +220,7 @@ class Kwitansi extends CI_Controller
 
 						'pesanan' => $this->input->post('pesanan'),
 						'nilai_pesanan' => $this->input->post('nilai_pesanan'),
+						'terbilang' =>ucwords($ter),
 						'untuk_pembayaran' => $this->input->post('untuk_pembayaran'),
 						'no_kwitansi'=> $this->input->post('no_kwitansi')
 						// 'tgl_terbit' => $this->input->post('tgl_terbit')

@@ -40,9 +40,32 @@
 
                   <?php 
                     
-                    foreach ($query as $data) {
-                    }
-                   ?>
+                    foreach ($query as $data) {}
+                    $date = date('d');
+                    if ($date == 01) {
+                        $no = 1;
+                      ?>
+                        <input type="text" name="nomor" value="<?= $no; ?>">
+                    <?php } else {?>
+
+
+                   <?php 
+
+                      if ($cek_nomor == null) { 
+
+                        $no = 1;
+                      ?>    
+
+                   <input type="text" name="nomor" value="<?= $no; ?>">
+                 <?php } else {
+
+                      foreach ($nomor as $kode) {}
+                      $no =  $kode['nomor'] +1;
+                    ?>
+
+                    <input type="text" name="nomor" value="<?= $no++; ?>">
+
+                  <?php } } ?>
 
                    <input type="hidden" name="id_user" value="<?= $data['id'] ?>">
 
@@ -64,7 +87,7 @@
 
                    <div class="form-groub">
                     <label>Untuk Pembayaran</label>
-                    <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran." required=""></textarea>
+                    <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran" required="" maxlength="158"></textarea>
                    </div>
 
                     <!-- <br>
@@ -132,7 +155,7 @@
                         </button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" href="<?= base_url() ?>kwitansi/edit?id=<?= $data['id'] ?>">Edit</a>
-                          <a class="dropdown-item" href="#">Print</a>
+                         <!--  <a class="dropdown-item" href="#">Print</a> -->
                           <a  target= "_blank" class="dropdown-item" href="<?= base_url() ?>kwitansi/cetak_kwitansi?id=<?= $data['id'] ?>">Cetak PDF</a>
                       </div>
 
@@ -184,18 +207,34 @@
                   </button>
                 </div>
                 <div class="modal-body">
+
+                  <style>
+                    hr{
+                      background-color: orange;
+                    }
+                  </style>
+
+                  <label>Nomor : </label>
+                  <p> <?= $data['no_kwitansi'] ?> </p>
+                  <hr>
+
+                  <label>Telah terima dari : </label>
+                  <p> <?= $data['pesanan'] ?> </p>
+                  <hr>
+
+                  <label>Uang sejumlah : </label>
+                  <p> <?= $data['terbilang'] ?> Rupiah </p>
+                    <hr>
+
+                   <label>Untuk pembayaran : </label>
+                  <p> <?= $data['untuk_pembayaran'] ?>  </p>
+                    <hr>
+
+                    <?php $angka = $data['nilai_pesanan']; ?>
+                   <label>Terbilang : </label>
+                  <p>Rp <?= number_format($angka,0,',','.'); ?>,-</p>
+                    
                 
-                  <p>No : <?= $data['no_kwitansi'] ?> </p>
-                  <p>Telah terima dari : <?= $data['pesanan'] ?> </p>  
-                  <p>Uang sejumlah : <?= $data['terbilang'] ?> Rupiah</p>
-                  <p>Untuk Pembayaran : <?= $data['untuk_pembayaran'] ?></p>
-                  <?php 
-
-                    $angka = $data['nilai_pesanan'];
-
-
-                   ?>
-                  <p>Terbilang Rp : <?= number_format($angka,2,',','.'); ?>,-</p>
 
                   
                              
