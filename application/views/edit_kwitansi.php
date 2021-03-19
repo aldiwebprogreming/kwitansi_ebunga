@@ -52,12 +52,6 @@
                      <small style="color: red"><?php echo form_error('untuk_pembayaran'); ?></small>
                    </div>
 
-                    <br>
-                   <div class="form-groub">
-                    <label>Nomor Kwitansi</label>
-                   <input type="text" name="no_kwitansi" class="form-control" value="<?= $data['no_kwitansi'] ?>">
-                    <small style="color: red"><?php echo form_error('no_terbit'); ?></small>
-                   </div>
 
                 
 

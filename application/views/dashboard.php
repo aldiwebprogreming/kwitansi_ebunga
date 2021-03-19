@@ -1,3 +1,6 @@
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -5,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> dfd </h1>
+            <h1 class="m-0"></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -15,6 +18,10 @@
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
+    </div>
+
+    <div class="container">
+      <?= $this->session->flashdata('hello'); ?>
     </div>
     <!-- /.content-header -->
 
@@ -71,7 +78,12 @@
          
           <!-- card pengunjung hari ini -->
            <div class="col-lg-6 col-6" id="pengunjunghariini">
-           
+              
+
+  <div class="container">
+    
+    <div class="calendar-wrapper" style="margin-bottom: 40px; background-color: silver;"></div>
+  </div>
            
            </div>
 
@@ -82,7 +94,6 @@
               
           </div>
           <!-- end card -->
-
 
           <!-- card visitor online -->
           <div class="col-lg-6 col-6" id="online">
@@ -115,9 +126,45 @@
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
+  <script src="http://momentjs.com/downloads/moment.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() ?>calender/calendar.js"></script>
+<script>
+  function selectDate(date) {
+  $('.calendar-wrapper').updateCalendarOptions({
+    date: date
+  });
+}
+
+var defaultConfig = {
+  weekDayLength: 1,
+  date: new Date(),
+  onClickDate: selectDate,
+  showYearDropdown: true,
+};
+
+$('.calendar-wrapper').calendar(defaultConfig);
+</script>
+<script>
+  $(document).ready(function() {
+ 
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      defaultDate: '2018-01-15',
+    });
+ 
+  });
+</script>
 
 <script>
 $(document).ready(function(){

@@ -19,6 +19,14 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/daterangepicker/daterangepicker.css">
+
+  <!-- Kalender -->
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="<?= base_url()  ?>calender/style.css">
+  <link rel="stylesheet" href="<?= base_url()  ?>calender/theme.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Kalender -->
  
   <script src="<?= base_url() ?>assets/plugins/jquery/jquery.min.js"></script>
 </head>

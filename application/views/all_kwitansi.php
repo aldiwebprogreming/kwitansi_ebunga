@@ -123,8 +123,8 @@
                           Action
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="<?= base_url() ?>kwitansi/edit?id=<?= $data['id'] ?>">Edit</a>
-                          <a class="dropdown-item" href="#">Print</a>
+                          <a class="dropdown-item" href="<?= base_url() ?>kwitansi/edit_all?id=<?= $data['id'] ?>">Edit</a>
+                          <!-- <a class="dropdown-item" href="#">Print</a> -->
                           <a  target= "_blank" class="dropdown-item" href="<?= base_url() ?>kwitansi/cetak_kwitansi?id=<?= $data['id'] ?>">Cetak PDF</a>
                       </div>
 
@@ -177,17 +177,32 @@
                 </div>
                 <div class="modal-body">
                 
-                  <p>No : <?= $data['no_kwitansi'] ?> </p>
-                  <p>Telah terima dari : <?= $data['pesanan'] ?> </p>  
-                  <p>Uang sejumlah : <?= $data['terbilang'] ?> Rupiah</p>
-                  <p>Untuk Pembayaran : <?= $data['untuk_pembayaran'] ?></p>
-                  <?php 
+                  <style>
+                    hr{
+                      background-color: orange;
+                    }
+                  </style>
 
-                    $angka = $data['nilai_pesanan'];
+                  <label>Nomor : </label>
+                  <p> <?= $data['no_kwitansi'] ?> </p>
+                  <hr>
 
+                  <label>Telah terima dari : </label>
+                  <p> <?= $data['pesanan'] ?> </p>
+                  <hr>
 
-                   ?>
-                  <p>Terbilang Rp : <?= number_format($angka,2,',','.'); ?>,-</p>
+                  <label>Uang sejumlah : </label>
+                  <p> <?= $data['terbilang'] ?> Rupiah </p>
+                    <hr>
+
+                   <label>Untuk pembayaran : </label>
+                  <p> <?= $data['untuk_pembayaran'] ?>  </p>
+                    <hr>
+
+                    <?php $angka = $data['nilai_pesanan']; ?>
+                   <label>Terbilang : </label>
+                  <p>Rp <?= number_format($angka,0,',','.'); ?>,-</p>
+                    
 
                   
                              

@@ -52,7 +52,14 @@ class Login extends CI_Controller
 					  imageAlt: 'Custom image',
 					})");
 
-				redirect('kwitansi/');
+					$this->session->set_flashdata('hello','<div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <strong>Hello '."$user".'</strong>, selamat datang di aplikasi kwitansi ebunga.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>');
+
+				redirect('Dashboard/');
 					
 				} elseif(password_verify($pass, $row['pass']) AND $row['rule'] == "Admin") {
 
@@ -72,7 +79,15 @@ class Login extends CI_Controller
 					  imageAlt: 'Custom image',
 					})");
 
-					redirect('kwitansi/');
+					$this->session->set_flashdata('hello','<div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <strong>Hello '."$user".'</strong>, selamat datang di aplikasi kwitansi ebunga.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>');
+					
+
+					redirect('Dashboard/');
 				} else {
 
 					$this->session->set_flashdata('message', "Swal.fire({
