@@ -52,7 +52,7 @@ table tr:nth-child(even) {
 		<p id="terbilang" style=" font-family:courier; margin-top: 15px; line-height: 1.5; text-indent: 130px; font-weight: bold;"><?= $data['untuk_pembayaran'] ?></p>
 		</div>
 
-		<p class="harga" style="position: absolute; top: 244px; left: 643px; font-family: courier; font-weight: bold;">Medan, <?= date('d-m-Y') ?></p>
+		<p class="harga" style="position: absolute; top: 244px; left: 643px; font-family: courier; font-weight: bold;">Medan, <?= $data['tanggal'] ?></p>
 
 		<?php 
 		$angka = $data['nilai_pesanan'];

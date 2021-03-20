@@ -123,6 +123,10 @@
                     <?php $angka = $data['nilai_pesanan']; ?>
                    <label>Terbilang : </label>
                   <p>Rp <?= number_format($angka,0,',','.'); ?>,-</p>
+                  <hr>
+
+                  <label>Tanggal Kwitansi : </label>
+                  <p> <?= $data['tanggal'] ?>  </p>
                   
                              
                 </div>

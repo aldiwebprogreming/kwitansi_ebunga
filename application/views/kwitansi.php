@@ -72,7 +72,7 @@
                   <br>
                    <div class="form-groub">
                     <label>Telah Terima Dari</label>
-                    <input type="text" name="pesanan" class="form-control" placeholder="Masukan keterangan pesanan" required="">
+                    <input type="text" name="pesanan" class="form-control" placeholder="Masukan keterangan pesanan" required="" maxlength="48">
                    </div>
 
                    <br>
@@ -89,6 +89,11 @@
                     <label>Untuk Pembayaran</label>
                     <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran" required="" maxlength="158"></textarea>
                    </div>
+
+                    <div class="form-groub">
+                      <label>Tanggal</label>
+                      <input type="date" name="tgl" class="form-control" placeholder="Masukan tanggal">
+                    </div>
 
                     <!-- <br>
                    <div class="form-groub">
@@ -233,6 +238,10 @@
                     <?php $angka = $data['nilai_pesanan']; ?>
                    <label>Terbilang : </label>
                   <p>Rp <?= number_format($angka,0,',','.'); ?>,-</p>
+                  <hr>
+
+                  <label>Tanggal Kwitansi : </label>
+                  <p> <?= $data['tanggal'] ?>  </p>
                     
                 
 

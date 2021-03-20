@@ -52,6 +52,12 @@
                      <small style="color: red"><?php echo form_error('untuk_pembayaran'); ?></small>
                    </div>
 
+                     <div class="form-groub">
+                    <label>Tanggal</label>
+                    <input type="date" name="tgl" class="form-control" value="<?= $data['tanggal'] ?>">
+                  
+                   </div>
+
 
                 
 

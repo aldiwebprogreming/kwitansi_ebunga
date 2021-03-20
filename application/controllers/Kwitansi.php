@@ -108,7 +108,8 @@ class Kwitansi extends CI_Controller
 				'no_kwitansi' => $no_kwitansi,
 				'tgl_terbit' => $tgl,
 				'id_user' => $id_user,
-				'nomor' => $nomor
+				'nomor' => $nomor,
+				'tanggal' => $this->input->post('tgl')
 
 
 			];
@@ -134,6 +135,11 @@ class Kwitansi extends CI_Controller
 		$data['footer'] = "Kwitansi Ebunga Nomor :";
 		$id = $this->input->get('id');
 		$data['cetak'] = $this->db->get_where('tbl_kwitansi',  array('id' => $id))->result_array();
+		$kode = $this->db->get_where('tbl_kwitansi', array('id' => $id))->result_array();
+		foreach ($kode as $kodeku) {
+		}
+		$aa = $kodeku['no_kwitansi'];
+
  		$this->load->view('cetak_kwitansi/cetak',$data);
 
  		$paper_size ="A4";
@@ -148,7 +154,7 @@ class Kwitansi extends CI_Controller
  		//kode dibawah ini unutk menajalankan di server linux agar tidak error saat menreload ke pdf
  		ob_end_clean();
  		//end
- 		$this->dompdf->stream("kwitansi_no_$id.pdf", array('Attachment' => 0));
+ 		$this->dompdf->stream("kwitansi_no_$aa.pdf", array('Attachment' => 0));
 	}
 
 
@@ -222,6 +228,7 @@ class Kwitansi extends CI_Controller
 						'nilai_pesanan' => $this->input->post('nilai_pesanan'),
 						'terbilang' =>ucwords($ter),
 						'untuk_pembayaran' => $this->input->post('untuk_pembayaran'),
+						'tanggal' => $this->input->post('tgl'),
 						// 'no_kwitansi'=> $this->input->post('no_kwitansi')
 						// 'tgl_terbit' => $this->input->post('tgl_terbit')
 
@@ -312,6 +319,7 @@ class Kwitansi extends CI_Controller
 						'nilai_pesanan' => $this->input->post('nilai_pesanan'),
 						'terbilang' =>ucwords($ter),
 						'untuk_pembayaran' => $this->input->post('untuk_pembayaran'),
+						'tanggal' => $this->input->post('tgl'),
 						// 'no_kwitansi'=> $this->input->post('no_kwitansi')
 						// 'tgl_terbit' => $this->input->post('tgl_terbit')
 
