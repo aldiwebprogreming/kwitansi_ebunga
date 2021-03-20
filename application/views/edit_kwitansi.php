@@ -31,7 +31,7 @@
                   <br>
                    <div class="form-groub">
                     <label>Telah Terima Dari</label>
-                    <input type="text" name="pesanan" class="form-control" placeholder="Masukan keterangan pesanan" value="<?= $data['pesanan'] ?>">
+                    <input type="text" name="pesanan" class="form-control" maxlength="48" placeholder="Masukan keterangan pesanan" value="<?= $data['pesanan'] ?>">
                     <small style="color: red"><?php echo form_error('pesanan'); ?></small>
                    </div>
 
@@ -48,7 +48,7 @@
 
                    <div class="form-groub">
                     <label>Untuk Pembayaran</label>
-                    <textarea class="form-control" name="untuk_pembayaran" placeholder="Masukan keterengan untuk pembayaran"><?= $data['untuk_pembayaran'] ?></textarea>
+                    <textarea class="form-control" name="untuk_pembayaran" maxlength="158" placeholder="Masukan keterengan untuk pembayaran"><?= $data['untuk_pembayaran'] ?></textarea>
                      <small style="color: red"><?php echo form_error('untuk_pembayaran'); ?></small>
                    </div>
 
